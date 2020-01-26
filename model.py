@@ -10,7 +10,7 @@ def get_behind_name(name: str):
     end_index = r.text.find("</div>", start_index+33)
     print(end_index)
     # print(start_index, end_index)
-    age = r.text[start_index+35:end_index] if start_index != -1 else '0'
+    behind_name = r.text[start_index+35:end_index] if start_index != -1 else '0'
     # print(age, type(age))
-    msg = age if age != '0' else f"Sorry, I don't know any '{name}'."
+    msg = behind_name if behind_name != '0' else f"Sorry, I don't know any '{name}'."
     return msg

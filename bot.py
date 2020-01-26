@@ -1,6 +1,6 @@
 import logging
 import model
-from telegram import Update
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CommandHandler, CallbackContext, MessageHandler, \
     Filters, Updater
 
@@ -21,8 +21,25 @@ def start(update: Update, context: CallbackContext):
     name = update.effective_user['first_name']
     print(name)
     text = model.get_behind_name(name)
-    context.bot.send_message(chat_id=chat_id, text=f"Hello {name}! you have a wonderful name.. did you know that:")
-    context.bot.send_message(chat_id=chat_id, text=f"{text}")
+    msg = f"Hello {name}!\nYou have a wonderful name.  did you know that:\n\n{text}"
+    context.bot.send_message(chat_id=chat_id, text=msg)
+    keyboard = [[InlineKeyboardButton("Aries ♈", callback_data = '1'),
+                InlineKeyboardButton("Taurus ♉", callback_data = '2'),
+                InlineKeyboardButton("Gemini ♊", callback_data = '3')],
+                [InlineKeyboardButton("Cancer ♋", callback_data = '4'),
+                InlineKeyboardButton("Leo ♌", callback_data = '5'),
+                InlineKeyboardButton("Virgo ♍", callback_data = '6')],
+                [InlineKeyboardButton("Libra ♎", callback_data = '7'),
+                InlineKeyboardButton("Scorpio ♏", callback_data = '8'),
+                InlineKeyboardButton("Sagittarius ♐", callback_data = '9')],
+                [InlineKeyboardButton("Capricorn ♑", callback_data = '10'),
+                InlineKeyboardButton("Aquarius ♒", callback_data = '11'),
+                InlineKeyboardButton("Pisces ♓", callback_data = '12')]]
+
+    reply_markup = InlineKeyboardMarkup(keyboard)
+
+    update.message.reply_text('Which sign are you?', reply_markup = reply_markup)
+    # context.bot.send_message(chat_id=chat_id, text=f"{text}")
 
 
 def respond(update: Update, context: CallbackContext):
