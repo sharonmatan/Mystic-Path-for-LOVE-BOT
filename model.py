@@ -15,14 +15,19 @@ def get_behind_name(name: str):
     return msg
 
 
-def matches_plot():
+def matches_plot(callback_data):
     data = [randint(5, 95) for i in range(12)]
     zodiac = ['Aries ♈', 'Taurus ♉', 'Gemini ♊', 'Cancer ♋', 'Leo ♌', 'Virgo ♍', 'Libra ♎', 'Scorpio ♏', 'Sagittarius ♐', 'Capricorn ♑', 'Aquarius ♒', 'Pisces ♓']
     plt.barh(zodiac, data, color = "darkviolet")
-    plt.title('❤ You and other signs as a MATCH ❤:')
+    title = f"❤ {zodiac[int(callback_data)]} and other signs as a MATCH ❤:"
+    plt.title(title)
     plt.xlim(right = 100)
     for i, v in enumerate(data):
         plt.text(v, i, " " + str(v), color = 'black', va = 'center', fontweight = 'bold')
+    for spine in plt.gca().spines.values() :
+        spine.set_visible(False)
+    plt.tick_params(bottom = 'off', left = 'off', labelleft = 'off', labelbottom = 'off')
+    plt.xticks([])
     plt.tight_layout()
     bio = io.BytesIO()
     plt.savefig(bio)

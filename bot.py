@@ -17,22 +17,21 @@ def start(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
     logger.info(f"> Start chat #{chat_id}")
     name = update.effective_user['first_name'].split(" ")[0]
-    # print(name)
     text = model.get_behind_name(name)
     msg = f"Hello {name}!\nYou have a wonderful name.\nHere is some info about it:\n\n{text}"
     context.bot.send_message(chat_id=chat_id, text=msg)
-    keyboard = [[InlineKeyboardButton("Aries ♈", callback_data = '1'),
-                InlineKeyboardButton("Taurus ♉", callback_data = '2'),
-                InlineKeyboardButton("Gemini ♊", callback_data = '3')],
-                [InlineKeyboardButton("Cancer ♋", callback_data = '4'),
-                InlineKeyboardButton("Leo ♌", callback_data = '5'),
-                InlineKeyboardButton("Virgo ♍", callback_data = '6')],
-                [InlineKeyboardButton("Libra ♎", callback_data = '7'),
-                InlineKeyboardButton("Scorpio ♏", callback_data = '8'),
-                InlineKeyboardButton("Sagittarius ♐", callback_data = '9')],
-                [InlineKeyboardButton("Capricorn ♑", callback_data = '10'),
-                InlineKeyboardButton("Aquarius ♒", callback_data = '11'),
-                InlineKeyboardButton("Pisces ♓", callback_data = '12')]]
+    keyboard = [[InlineKeyboardButton("Aries ♈", callback_data = '0'),
+                InlineKeyboardButton("Taurus ♉", callback_data = '1'),
+                InlineKeyboardButton("Gemini ♊", callback_data = '2')],
+                [InlineKeyboardButton("Cancer ♋", callback_data = '3'),
+                InlineKeyboardButton("Leo ♌", callback_data = '4'),
+                InlineKeyboardButton("Virgo ♍", callback_data = '5')],
+                [InlineKeyboardButton("Libra ♎", callback_data = '6'),
+                InlineKeyboardButton("Scorpio ♏", callback_data = '7'),
+                InlineKeyboardButton("Sagittarius ♐", callback_data = '8')],
+                [InlineKeyboardButton("Capricorn ♑", callback_data = '9'),
+                InlineKeyboardButton("Aquarius ♒", callback_data = '10'),
+                InlineKeyboardButton("Pisces ♓", callback_data = '11')]]
 
     reply_markup = InlineKeyboardMarkup(keyboard)
     update.message.reply_text('Which Zodiac sign are you?', reply_markup = reply_markup)
@@ -48,7 +47,8 @@ def respond(update: Update, context: CallbackContext):
 
 def button(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
-    bio = model.matches_plot()
+    query = update.callback_query
+    bio = model.matches_plot(query.data)
     bio.seek(0)
     context.bot.send_photo(chat_id = chat_id, photo = bio)
 
