@@ -2,7 +2,7 @@ import logging
 import model
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CommandHandler, CallbackContext, MessageHandler, \
-    Filters, Updater
+    Filters, Updater, CallbackQueryHandler
 import secrets
 
 
@@ -17,7 +17,6 @@ def start(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
     logger.info(f"> Start chat #{chat_id}")
     name = update.effective_user['first_name']
-    # print(name)
     text = model.get_behind_name(name)
     msg = f"Hello {name}!\nYou have a wonderful name.\nHere is some info about your name:\n\n{text}"
     context.bot.send_message(chat_id=chat_id, text=msg)
@@ -46,6 +45,13 @@ def respond(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.message.chat_id, text=response)
 
 
+def button(update: Update, context: CallbackContext):
+    chat_id = update.effective_chat.id
+    bio = model.matches_plot()
+    bio.seek(0)
+    context.bot.send_photo(chat_id = chat_id, photo = bio)
+
+
 def main():
     updater = Updater(token=secrets.BOT_TOKEN, use_context=True)
     dispatcher = updater.dispatcher
@@ -54,6 +60,7 @@ def main():
 
     echo_handler = MessageHandler(Filters.text, respond)
     dispatcher.add_handler(echo_handler)
+    updater.dispatcher.add_handler(CallbackQueryHandler(button))
 
     logger.info("* Start polling...")
     updater.start_polling()  # Starts polling in a background thread.
