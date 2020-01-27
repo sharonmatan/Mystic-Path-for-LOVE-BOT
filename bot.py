@@ -17,9 +17,9 @@ def start(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
     logger.info(f"> Start chat #{chat_id}")
     name = update.effective_user['first_name'].split(" ")[0]
-    print(name)
+    # print(name)
     text = model.get_behind_name(name)
-    msg = f"Hello {name}!\nYou have a wonderful name.\nHere is some info about your name:\n\n{text}"
+    msg = f"Hello {name}!\nYou have a wonderful name.\nHere is some info about it:\n\n{text}"
     context.bot.send_message(chat_id=chat_id, text=msg)
     keyboard = [[InlineKeyboardButton("Aries ♈", callback_data = '1'),
                 InlineKeyboardButton("Taurus ♉", callback_data = '2'),
@@ -35,7 +35,7 @@ def start(update: Update, context: CallbackContext):
                 InlineKeyboardButton("Pisces ♓", callback_data = '12')]]
 
     reply_markup = InlineKeyboardMarkup(keyboard)
-    update.message.reply_text('Which sign are you?', reply_markup = reply_markup)
+    update.message.reply_text('Which Zodiac sign are you?', reply_markup = reply_markup)
 
 
 def respond(update: Update, context: CallbackContext):

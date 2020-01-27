@@ -16,10 +16,10 @@ def get_behind_name(name: str):
 
 
 def matches_plot():
-    data = [randint(1, 100) for i in range(12)]
+    data = [randint(5, 95) for i in range(12)]
     zodiac = ['Aries ♈', 'Taurus ♉', 'Gemini ♊', 'Cancer ♋', 'Leo ♌', 'Virgo ♍', 'Libra ♎', 'Scorpio ♏', 'Sagittarius ♐', 'Capricorn ♑', 'Aquarius ♒', 'Pisces ♓']
     plt.barh(zodiac, data, color = "darkviolet")
-    plt.title('Your Matches:')
+    plt.title('❤ You and other signs as a MATCH ❤:')
     plt.xlim(right = 100)
     for i, v in enumerate(data):
         plt.text(v, i, " " + str(v), color = 'black', va = 'center', fontweight = 'bold')
