@@ -23,6 +23,7 @@ def matches_plot():
     plt.xlim(right = 100)
     for i, v in enumerate(data):
         plt.text(v, i, " " + str(v), color = 'black', va = 'center', fontweight = 'bold')
+    plt.tight_layout()
     bio = io.BytesIO()
     plt.savefig(bio)
     return bio

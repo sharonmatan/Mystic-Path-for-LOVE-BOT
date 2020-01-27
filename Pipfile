@@ -11,6 +11,7 @@ ipython = "*"
 python-telegram-bot = "*"
 beautifulsoup4 = "*"
 matplotlib = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.7"

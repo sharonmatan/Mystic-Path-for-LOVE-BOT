@@ -1,5 +1,10 @@
 # YOUR BACKEND TESTS HERE
+from PIL import Image
+
+import model
 
 
 def test_bar_chart():
-    data = [17, 6, 80, 35, 77, 99, 40, 56, 67, 89, 34, 55]
+    bio = model.matches_plot()
+    bio.seek(0)
+    Image.open(bio).show()
