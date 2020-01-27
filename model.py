@@ -1,16 +1,12 @@
 # YOUR BOT LOGIC/STORAGE/BACKEND FUNCTIONS HERE
 import requests
+from bs4 import BeautifulSoup
 
 
 def get_behind_name(name: str):
     r = requests.get(f"https://www.behindthename.com/name/{name}")
-    print(r.headers)
-    start_index = r.text.find("Meaning & History")
-    print(start_index)
-    end_index = r.text.find("</div>", start_index+33)
-    print(end_index)
-    # print(start_index, end_index)
-    behind_name = r.text[start_index+35:end_index] if start_index != -1 else '0'
-    # print(age, type(age))
-    msg = behind_name if behind_name != '0' else f"Sorry, I don't know any '{name}'."
+    soup = BeautifulSoup(r.text, 'html.parser')
+    namemain = soup.find_all("div", class_ = "namemain")[0]
+    name_content = list(namemain.next_siblings)[1].get_text()
+    msg = name_content if name_content != '0' else f"Sorry, I don't know any '{name}'."
     return msg

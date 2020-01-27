@@ -3,10 +3,8 @@ import model
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CommandHandler, CallbackContext, MessageHandler, \
     Filters, Updater
-
 import secrets
 
-BASE = "https://en.wikipedia.org/wiki/"
 
 logging.basicConfig(
     format='[%(levelname)s %(asctime)s %(module)s:%(lineno)d] %(message)s',
@@ -19,9 +17,9 @@ def start(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
     logger.info(f"> Start chat #{chat_id}")
     name = update.effective_user['first_name']
-    print(name)
+    # print(name)
     text = model.get_behind_name(name)
-    msg = f"Hello {name}!\nYou have a wonderful name.  did you know that:\n\n{text}"
+    msg = f"Hello {name}!\nYou have a wonderful name.\nHere is some info about your name:\n\n{text}"
     context.bot.send_message(chat_id=chat_id, text=msg)
     keyboard = [[InlineKeyboardButton("Aries ♈", callback_data = '1'),
                 InlineKeyboardButton("Taurus ♉", callback_data = '2'),
@@ -37,9 +35,7 @@ def start(update: Update, context: CallbackContext):
                 InlineKeyboardButton("Pisces ♓", callback_data = '12')]]
 
     reply_markup = InlineKeyboardMarkup(keyboard)
-
     update.message.reply_text('Which sign are you?', reply_markup = reply_markup)
-    # context.bot.send_message(chat_id=chat_id, text=f"{text}")
 
 
 def respond(update: Update, context: CallbackContext):
@@ -51,8 +47,6 @@ def respond(update: Update, context: CallbackContext):
 
 
 def main():
-    print(secrets.BOT_TOKEN)
-    # YOUR BOT HERE
     updater = Updater(token=secrets.BOT_TOKEN, use_context=True)
     dispatcher = updater.dispatcher
     start_handler = CommandHandler('start', start)
@@ -69,4 +63,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
