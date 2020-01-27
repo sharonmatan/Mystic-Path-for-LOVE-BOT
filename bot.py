@@ -17,6 +17,7 @@ def start(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
     logger.info(f"> Start chat #{chat_id}")
     name = update.effective_user['first_name'].split(" ")[0]
+    # print(name)
     text = model.get_behind_name(name)
     msg = f"Hello {name}!\nYou have a wonderful name.\nHere is some info about it:\n\n{text}"
     context.bot.send_message(chat_id=chat_id, text=msg)
@@ -48,20 +49,19 @@ def respond(update: Update, context: CallbackContext):
 def button(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
     query = update.callback_query
+    query.edit_message_text(text = "LOVE IS IN THE AIR...")
     bio = model.matches_plot(query.data)
     bio.seek(0)
+    # context.job_queue.run_daily(callback_alarm, context = update.message.chat_id, days = (0, 1, 2, 3, 4, 5, 6), time = time(hour = 10, minute = 10, second = 10))
     context.bot.send_photo(chat_id = chat_id, photo = bio)
 
 
 def main():
     updater = Updater(token=secrets.BOT_TOKEN, use_context=True)
     dispatcher = updater.dispatcher
-    start_handler = CommandHandler('start', start)
-    dispatcher.add_handler(start_handler)
-
-    echo_handler = MessageHandler(Filters.text, respond)
-    dispatcher.add_handler(echo_handler)
-    updater.dispatcher.add_handler(CallbackQueryHandler(button))
+    dispatcher.add_handler(CommandHandler('start', start))
+    dispatcher.add_handler(MessageHandler(Filters.text, respond))
+    dispatcher.add_handler(CallbackQueryHandler(button))
 
     logger.info("* Start polling...")
     updater.start_polling()  # Starts polling in a background thread.
