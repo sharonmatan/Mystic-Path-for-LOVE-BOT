@@ -16,7 +16,8 @@ logger = logging.getLogger(__name__)
 def start(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
     logger.info(f"> Start chat #{chat_id}")
-    name = update.effective_user['first_name']
+    name = update.effective_user['first_name'].split(" ")[0]
+    print(name)
     text = model.get_behind_name(name)
     msg = f"Hello {name}!\nYou have a wonderful name.\nHere is some info about your name:\n\n{text}"
     context.bot.send_message(chat_id=chat_id, text=msg)
