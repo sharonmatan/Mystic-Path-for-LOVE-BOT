@@ -32,3 +32,5 @@ TIMES = [
 PLACES = [
 
 ]
+
+COVER_CARDS = ["tarot_backcard.png", "", ""]

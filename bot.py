@@ -19,7 +19,7 @@ def start(update: Update, context: CallbackContext):
     name = update.effective_user['first_name'].split(" ")[0]
     # print(name)
     text = model.get_behind_name(name)
-    msg = f"Hello {name}!\nYou have a wonderful name.\nHere is some info about it:\n\n{text}"
+    msg = f"Hello {name} 🌹 \n\nYou have a wonderful name ✨\n\nHere is some info about it:\n\n{text}"
     context.bot.send_message(chat_id=chat_id, text=msg)
     keyboard = [[InlineKeyboardButton("Aries ♈", callback_data = '0'),
                 InlineKeyboardButton("Taurus ♉", callback_data = '1'),
@@ -35,6 +35,8 @@ def start(update: Update, context: CallbackContext):
                 InlineKeyboardButton("Pisces ♓", callback_data = '11')]]
 
     reply_markup = InlineKeyboardMarkup(keyboard)
+    # context.job_queue.run_once(reply_markup = InlineKeyboardMarkup(keyboard), when=1, context =chat_id)
+    # context.job_queue.run_once(update.message.reply_text('Which Zodiac sign are you?', reply_markup = reply_markup), when=1, context =chat_id)
     update.message.reply_text('Which Zodiac sign are you?', reply_markup = reply_markup)
 
 
@@ -49,11 +51,27 @@ def respond(update: Update, context: CallbackContext):
 def button(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
     query = update.callback_query
-    query.edit_message_text(text = "LOVE IS IN THE AIR...")
+    msg = f"💖❤💕  LOVE IS IN THE AIR... {chr(9800+int(query.data))}💋"
+    query.edit_message_text(text = msg)
     bio = model.matches_plot(query.data)
     bio.seek(0)
     # context.job_queue.run_daily(callback_alarm, context = update.message.chat_id, days = (0, 1, 2, 3, 4, 5, 6), time = time(hour = 10, minute = 10, second = 10))
     context.bot.send_photo(chat_id = chat_id, photo = bio)
+    text = "LET'S FIND YOUR LOVER!!!💖\n\nChoose your favorite path:\n /Tarot  /Stars  /Numerology"
+    context.bot.send_message(chat_id = chat_id, text = text)
+
+
+def cards(update: Update, context: CallbackContext):
+    text = update.message.text
+    if text == '/Tarot':
+        i = 0
+    if text == '/Stars':
+        i = 1
+    if text == '/Numerology':
+        i = 2
+    chat_id = update.effective_chat.id
+    for i in range(6):
+        context.bot.send_photo(chat_id=chat_id, photo=open('card.png', 'rb'))
 
 
 def main():
@@ -62,6 +80,9 @@ def main():
     dispatcher.add_handler(CommandHandler('start', start))
     dispatcher.add_handler(MessageHandler(Filters.text, respond))
     dispatcher.add_handler(CallbackQueryHandler(button))
+    dispatcher.add_handler(CommandHandler('Tarot', cards))
+    dispatcher.add_handler(CommandHandler('Stars', cards))
+    dispatcher.add_handler(CommandHandler('Numerology', cards))
 
     logger.info("* Start polling...")
     updater.start_polling()  # Starts polling in a background thread.
