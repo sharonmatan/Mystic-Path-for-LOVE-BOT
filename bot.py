@@ -63,15 +63,18 @@ def button(update: Update, context: CallbackContext):
 
 def cards(update: Update, context: CallbackContext):
     text = update.message.text
+    chat_id = update.effective_chat.id
     if text == '/Tarot':
         i = 0
+        context.bot.send_photo(chat_id = chat_id, photo = open('Tarot-Deck-main.jpg', 'rb'))
     if text == '/Stars':
         i = 1
+        context.bot.send_photo(chat_id = chat_id, photo = open('stars_backcard.jpg', 'rb'))
     if text == '/Numerology':
         i = 2
-    chat_id = update.effective_chat.id
-    for i in range(6):
-        context.bot.send_photo(chat_id=chat_id, photo=open('card.png', 'rb'))
+        context.bot.send_photo(chat_id = chat_id, photo = open('numerology_backcards.png', 'rb'))
+    # for i in range(6):
+    #     context.bot.send_photo(chat_id=chat_id, photo=open('Tarot-Deck-main.jpg', 'rb'))
 
 
 def main():

@@ -9,4 +9,6 @@ def test_bar_chart():
     bio.seek(0)
     Image.open(bio).show()
 
+
 def test_table_of_cards():
+    pass
