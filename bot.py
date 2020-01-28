@@ -57,7 +57,7 @@ def button(update: Update, context: CallbackContext):
     bio.seek(0)
     # context.job_queue.run_daily(callback_alarm, context = update.message.chat_id, days = (0, 1, 2, 3, 4, 5, 6), time = time(hour = 10, minute = 10, second = 10))
     context.bot.send_photo(chat_id = chat_id, photo = bio)
-    text = "LET'S FIND YOUR LOVER!!!💖\n\nChoose your favorite path:\n /Tarot  /Stars  /Numerology"
+    text = "LET'S FIND YOUR LOVER!!!💖\n\nChoose your favorite path:\n\n /Tarot\n\n           /Stars\n\n                    /Numerology"
     context.bot.send_message(chat_id = chat_id, text = text)
 
 
@@ -66,13 +66,13 @@ def cards(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
     if text == '/Tarot':
         i = 0
-        context.bot.send_photo(chat_id = chat_id, photo = open('Tarot-Deck-main.jpg', 'rb'))
+        context.bot.send_photo(chat_id = chat_id, photo = open('tarot.jpg', 'rb'))
     if text == '/Stars':
         i = 1
-        context.bot.send_photo(chat_id = chat_id, photo = open('stars_backcard.jpg', 'rb'))
+        context.bot.send_photo(chat_id = chat_id, photo = open('star_maps.jpg', 'rb'))
     if text == '/Numerology':
         i = 2
-        context.bot.send_photo(chat_id = chat_id, photo = open('numerology_backcards.png', 'rb'))
+        context.bot.send_photo(chat_id = chat_id, photo = open('numerology.jpg', 'rb'))
     # for i in range(6):
     #     context.bot.send_photo(chat_id=chat_id, photo=open('Tarot-Deck-main.jpg', 'rb'))
 
