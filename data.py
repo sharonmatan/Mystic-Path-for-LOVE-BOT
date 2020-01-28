@@ -29,8 +29,26 @@ TIMES = [
     'Saturday evening',
 ]
 
-PLACES = [
-
+PLACES =  [
+    'Golan Heights',
+    'Ramon Crater',
+    'Dead Sea',
+    'Eilat',
+    'Gym',
+    "Mike's Place",
+    'The Neighbours Supermarket',
+    'Work',
+    'Shalvata Club',
+    'The western wall',
+    'The Gordon Beach',
+    'The Eiffel Tower',
+    'Ramla',
+    'Bloomfield Stadium',
+    'Menora Mivtachim Arena',
+    'The Minzar BAR in Tel Aviv',
+    'Azrieli Mall',
+    'The Yarkon Park',
+    'The Jordan River'
 ]
 
 COVER_CARDS = ["tarot_backcard.png", "", ""]

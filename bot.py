@@ -1,4 +1,7 @@
 import logging
+import random
+
+import data
 import model
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CommandHandler, CallbackContext, MessageHandler, \
@@ -65,16 +68,19 @@ def cards(update: Update, context: CallbackContext):
     text = update.message.text
     chat_id = update.effective_chat.id
     if text == '/Tarot':
-        i = 0
         context.bot.send_photo(chat_id = chat_id, photo = open('tarot.jpg', 'rb'))
+        txt = """Tap into the ancient wisdom of the pharoahs to find answers and guidance in your love life with your Egyptian Love Tarot reading.."""
     if text == '/Stars':
-        i = 1
         context.bot.send_photo(chat_id = chat_id, photo = open('star_maps.jpg', 'rb'))
+        txt = """A birth chart, also known as a natal chart, is a map of where all the major planets and astral bodies were located at the time you were born."""
     if text == '/Numerology':
-        i = 2
         context.bot.send_photo(chat_id = chat_id, photo = open('numerology.jpg', 'rb'))
-    # for i in range(6):
-    #     context.bot.send_photo(chat_id=chat_id, photo=open('Tarot-Deck-main.jpg', 'rb'))
+        txt = """In Numerology, each of the nine single digit numbers has a personality"""
+    context.bot.send_message(chat_id = chat_id, text = txt)
+    when_meet = random.choice(data.TIMES)
+    where_meet = random.choice(data.PLACES)
+    msg = f"Your personal reading revealed that you have a high potential of meeting someone new this {when_meet} at {where_meet}!\nBest of luck 🌹✨"
+    context.bot.send_message(chat_id = chat_id, text = msg)
 
 
 def main():
