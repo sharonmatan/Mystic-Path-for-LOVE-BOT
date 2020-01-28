@@ -5,7 +5,6 @@ import requests
 from bs4 import BeautifulSoup
 import matplotlib.pyplot as plt
 from matplotlib.axes import Axes
-from PIL import Image
 
 
 def get_behind_name(name: str):
@@ -25,9 +24,7 @@ def get_behind_name(name: str):
 def matches_plot(callback_data):
     data = [randint(5, 95) for i in range(12)]
     zodiac = ['Aries ♈', 'Taurus ♉', 'Gemini ♊', 'Cancer ♋', 'Leo ♌', 'Virgo ♍', 'Libra ♎', 'Scorpio ♏', 'Sagittarius ♐', 'Capricorn ♑', 'Aquarius ♒', 'Pisces ♓']
-    # img = plt.imread("plot_background.jpg")
     fig, ax = plt.subplots()
-    # ax.imshow(img, aspect="equal", extent=(-5, 4, -0.01, 0.05))
     ax: Axes
     ax.barh(zodiac, data, color = "darkviolet")
     title = f"{zodiac[int(callback_data)].split(' ')[1]}{zodiac[int(callback_data)].split(' ')[0]} & other signs as a MATCH ❤:"
@@ -40,20 +37,6 @@ def matches_plot(callback_data):
     ax.tick_params(bottom = 'off', left = 'off', labelleft = 'off', labelbottom = 'off')
     ax.set_xticks([])
     fig.tight_layout()
-    bio = io.BytesIO()
-    fig.savefig(bio)
-    return bio
-
-
-def table_of_cards():
-    im = Image.open("Tarot-Deck-main.jpg")
-    print(im.size, im.mode, im.format)
-    region = im.crop((100, 100, 200, 200))
-    region = region.resize((400, 600))
-    new_image = Image.new('RGBA', (800, 600))
-    new_image.paste(region, (0, 0, 400, 600))
-    new_image.paste(region, (400, 0, 800, 600))
-    new_image.save('new.png')
     bio = io.BytesIO()
     fig.savefig(bio)
     return bio

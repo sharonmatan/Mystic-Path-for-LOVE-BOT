@@ -1,6 +1,8 @@
 import logging
 import random
 
+import telegram
+
 import data
 import model
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
@@ -20,7 +22,6 @@ def start(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
     logger.info(f"> Start chat #{chat_id}")
     name = update.effective_user['first_name'].split(" ")[0]
-    # print(name)
     text = model.get_behind_name(name)
     msg = f"Hello {name} 🌹 \n\nYou have a wonderful name ✨\n\nHere is some info about it:\n\n{text}"
     context.bot.send_message(chat_id=chat_id, text=msg)
@@ -38,9 +39,8 @@ def start(update: Update, context: CallbackContext):
                 InlineKeyboardButton("Pisces ♓", callback_data = '11')]]
 
     reply_markup = InlineKeyboardMarkup(keyboard)
-    # context.job_queue.run_once(reply_markup = InlineKeyboardMarkup(keyboard), when=1, context =chat_id)
-    # context.job_queue.run_once(update.message.reply_text('Which Zodiac sign are you?', reply_markup = reply_markup), when=1, context =chat_id)
-    update.message.reply_text('Which Zodiac sign are you?', reply_markup = reply_markup)
+    ms = 'Which Zodiac sign are you?'
+    context.job_queue.run_once(one_time_start, when = 5, context = [update, context, reply_markup, ms])
 
 
 def respond(update: Update, context: CallbackContext):
@@ -58,10 +58,34 @@ def button(update: Update, context: CallbackContext):
     query.edit_message_text(text = msg)
     bio = model.matches_plot(query.data)
     bio.seek(0)
-    # context.job_queue.run_daily(callback_alarm, context = update.message.chat_id, days = (0, 1, 2, 3, 4, 5, 6), time = time(hour = 10, minute = 10, second = 10))
-    context.bot.send_photo(chat_id = chat_id, photo = bio)
-    text = "LET'S FIND YOUR LOVER!!!💖\n\nChoose your favorite path:\n\n /Tarot\n\n           /Stars\n\n                    /Numerology"
-    context.bot.send_message(chat_id = chat_id, text = text)
+    context.job_queue.run_once(one_time_button, when = 5, context = [update, context, chat_id, bio])
+    text = """LET'S FIND YOUR LOVER!!!💖\n\n
+Choose your favorite path:\n\n /Tarot\n\n           /Stars\n\n                    /Numerology"""
+    context.job_queue.run_once(one_time_cards, when = 20, context = [update, context, chat_id, text])
+
+
+def one_time_cards(context: telegram.ext.CallbackContext):
+    u = context.job.context[0]
+    c = context.job.context[1]
+    c_id = context.job.context[2]
+    m = context.job.context[3]
+    c.bot.send_message(chat_id = c_id, text = m)
+
+
+def one_time_button(context: telegram.ext.CallbackContext):
+    u = context.job.context[0]
+    c = context.job.context[1]
+    c_id = context.job.context[2]
+    b = context.job.context[3]
+    c.bot.send_photo(chat_id = c_id, photo = b)
+
+
+def one_time_start(context: telegram.ext.CallbackContext):
+    u = context.job.context[0]
+    c = context.job.context[1]
+    r_m = context.job.context[2]
+    m = context.job.context[3]
+    u.message.reply_text(m, reply_markup = r_m)
 
 
 def cards(update: Update, context: CallbackContext):
@@ -80,7 +104,7 @@ def cards(update: Update, context: CallbackContext):
     when_meet = random.choice(data.TIMES)
     where_meet = random.choice(data.PLACES)
     msg = f"Your personal reading revealed that you have a high potential of meeting someone new this {when_meet} at {where_meet}!\nBest of luck 🌹✨"
-    context.bot.send_message(chat_id = chat_id, text = msg)
+    context.job_queue.run_once(one_time_cards, when = 10, context = [update, context, chat_id, msg])
 
 
 def main():

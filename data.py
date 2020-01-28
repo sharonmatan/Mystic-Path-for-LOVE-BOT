@@ -50,5 +50,3 @@ PLACES =  [
     'The Yarkon Park',
     'The Jordan River'
 ]
-
-COVER_CARDS = ["tarot_backcard.png", "", ""]
