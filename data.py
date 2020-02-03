@@ -48,5 +48,6 @@ PLACES =  [
     'The Minzar BAR in Tel Aviv',
     'Azrieli Mall',
     'The Yarkon Park',
-    'The Jordan River'
+    'The Jordan River',
+    'jorden'
 ]
