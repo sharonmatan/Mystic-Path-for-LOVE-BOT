@@ -1,6 +1,3 @@
-# Mystic Path for LOVE
-<https://t.me/@mystic_map_bot>
-
 With just your name and zodiac sign we will find your love!
 
 * Hagit Ram
