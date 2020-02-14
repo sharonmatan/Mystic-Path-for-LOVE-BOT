@@ -1,9 +1,9 @@
 ## With just your name and zodiac sign we will find your love!
 
 A telegram bot that mystically examines your future love.
-It first shows details of your name (from the API).
-He then checks your chances of success with any luck and shows them in the graph.
-Finally, he asks you to choose a magician who will read your fortunes and tell you exactly when and where you will find your love.
+* It first shows details of your name (from the API).
+* He then checks your chances of success with any luck and shows them in the graph.
+* Finally, he asks you to choose a magician who will read your fortunes and tell you exactly when and where you will find your love.
 
 By:
 * Hagit Ram
