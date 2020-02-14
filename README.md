@@ -5,6 +5,8 @@ A telegram bot that mystically examines your future love.
 * He then checks your chances of success with any luck and shows them in the graph.
 * Finally, he asks you to choose a magician who will read your fortunes and tell you exactly when and where you will find your love.
 
+The project is based on the python.
+
 By:
 * Hagit Ram
 * Matan Shaorn
